@@ -1,23 +1,100 @@
 .feedback-page {
   min-height: 100vh;
-  background: var(--color-bg);
+  background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
 }
 
 .feedback-page-header {
   text-align: center;
-  padding: var(--space-2xl) var(--space-lg);
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding: 56px 28px;
+  background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 50%, #3B82F6 100%);
   color: white;
-  margin-bottom: var(--space-xl);
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.feedback-page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.8;
 }
 
 .feedback-page-header .page-title {
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  margin-bottom: var(--space-sm);
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  position: relative;
+  letter-spacing: -0.5px;
 }
 
 .feedback-page-subtitle {
-  font-size: var(--font-size-base);
+  font-size: 16px;
   opacity: 0.9;
+  position: relative;
+  font-weight: 500;
+}
+
+/* Feedback form container */
+.feedback-form-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+
+/* Thank you section */
+.thank-you-section {
+  text-align: center;
+  padding: 60px 28px;
+}
+
+.thank-you-icon {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  color: #059669;
+  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.3);
+}
+
+.thank-you-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1E293B;
+  margin-bottom: 12px;
+}
+
+.thank-you-message {
+  font-size: 16px;
+  color: #64748B;
+  margin-bottom: 32px;
+}
+
+.thank-you-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .feedback-page-header {
+    padding: 40px 20px;
+  }
+  
+  .feedback-page-header .page-title {
+    font-size: 26px;
+  }
+  
+  .feedback-form-container {
+    padding: 0 16px 32px;
+  }
 }

@@ -8,8 +8,8 @@
 
 .main-content {
   flex: 1;
-  padding: var(--space-lg);
-  background: var(--color-bg);
+  padding: 28px;
+  background: transparent;
 }
 
 @media (max-width: 1024px) {
@@ -18,6 +18,6 @@
   }
   
   .main-content {
-    padding: var(--space-md);
+    padding: 20px;
   }
 }

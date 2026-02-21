@@ -1,27 +1,55 @@
 .dashboard-page {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: 28px;
 }
 
 .dashboard-overview {
-  margin-bottom: var(--space-md);
+  margin-bottom: 8px;
 }
 
 .dashboard-charts {
-  margin-bottom: var(--space-md);
+  margin-bottom: 8px;
 }
 
 .dashboard-leaderboard {
-  margin-bottom: var(--space-md);
+  margin-bottom: 8px;
 }
 
 .dashboard-timeline {
-  margin-bottom: var(--space-lg);
+  margin-bottom: 28px;
+}
+
+/* Page title enhancement */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1E293B;
+  letter-spacing: -0.5px;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #64748B;
+  margin-top: 4px;
+  font-weight: 500;
 }
 
 @media (max-width: 640px) {
   .dashboard-page {
-    gap: var(--space-md);
+    gap: 20px;
+  }
+  
+  .page-title {
+    font-size: 24px;
   }
 }
