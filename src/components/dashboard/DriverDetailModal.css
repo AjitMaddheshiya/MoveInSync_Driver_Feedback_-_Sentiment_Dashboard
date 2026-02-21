@@ -1,0 +1,124 @@
+.driver-detail-modal {
+  max-width: 800px;
+}
+
+.driver-detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.driver-detail-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.driver-detail-meta .driver-id {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.driver-stats {
+  display: flex;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.detail-section {
+  margin-bottom: var(--space-xl);
+}
+
+.section-title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.chart-container {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.feedback-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.feedback-history-item {
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+}
+
+.feedback-history-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.feedback-type {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-transform: capitalize;
+}
+
+.feedback-time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-left: auto;
+}
+
+.feedback-history-item .feedback-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.5;
+}
+
+.feedback-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+@media (max-width: 640px) {
+  .driver-stats {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  
+  .stat-item {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

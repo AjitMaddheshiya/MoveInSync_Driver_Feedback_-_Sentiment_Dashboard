@@ -1,0 +1,23 @@
+.feedback-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.feedback-page-header {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  margin-bottom: var(--space-xl);
+}
+
+.feedback-page-header .page-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.feedback-page-subtitle {
+  font-size: var(--font-size-base);
+  opacity: 0.9;
+}

@@ -1,0 +1,27 @@
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.dashboard-overview {
+  margin-bottom: var(--space-md);
+}
+
+.dashboard-charts {
+  margin-bottom: var(--space-md);
+}
+
+.dashboard-leaderboard {
+  margin-bottom: var(--space-md);
+}
+
+.dashboard-timeline {
+  margin-bottom: var(--space-lg);
+}
+
+@media (max-width: 640px) {
+  .dashboard-page {
+    gap: var(--space-md);
+  }
+}

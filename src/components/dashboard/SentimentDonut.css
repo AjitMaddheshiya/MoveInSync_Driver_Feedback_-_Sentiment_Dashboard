@@ -1,0 +1,40 @@
+.sentiment-donut {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sentiment-donut-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  color: var(--color-text-secondary);
+}
+
+.sentiment-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.sentiment-total {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1;
+}
+
+.sentiment-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+}
+
+.recharts-legend-item-text {
+  color: var(--color-text-primary) !important;
+}
