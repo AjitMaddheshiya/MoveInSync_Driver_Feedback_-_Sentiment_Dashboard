@@ -74,6 +74,12 @@ const calculateMetrics = (feedbackEntries: FeedbackEntry[], dateRange: DateRange
     ? filteredFeedback.reduce((sum, f) => sum + f.score, 0) / filteredFeedback.length
     : 0;
   
+  // Category breakdown
+  const driverCount = filteredFeedback.filter(f => f.entityType === 'driver').length;
+  const tripCount = filteredFeedback.filter(f => f.entityType === 'trip').length;
+  const appCount = filteredFeedback.filter(f => f.entityType === 'app').length;
+  const marshalCount = filteredFeedback.filter(f => f.entityType === 'marshal').length;
+  
   return {
     totalFeedback: filteredFeedback.length,
     positiveCount,
@@ -81,6 +87,10 @@ const calculateMetrics = (feedbackEntries: FeedbackEntry[], dateRange: DateRange
     negativeCount,
     averageScore: Math.round(averageScore * 10) / 10,
     driversBelowThreshold: drivers.filter(d => d.averageScore < 2.5).length,
+    driverCount,
+    tripCount,
+    appCount,
+    marshalCount,
   };
 };
 

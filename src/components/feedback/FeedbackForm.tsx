@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { FeatureFlags, FeedbackSection as FeedbackSectionType, FeedbackEntry } from '../../types';
 import { feedbackTags } from '../../data/mockData';
@@ -22,52 +22,64 @@ const sectionTitles: Record<string, string> = {
   marshal: 'Rate the Marshal',
 };
 
+// Helper function to generate sections from feature flags
+const getSectionsFromFeatureFlags = (featureFlags: FeatureFlags): FormSection[] => {
+  const enabledSections: FormSection[] = [];
+  
+  if (featureFlags.driverFeedback) {
+    enabledSections.push({
+      entityType: 'driver',
+      title: sectionTitles.driver,
+      rating: 0,
+      tags: [],
+      comment: '',
+    });
+  }
+  if (featureFlags.tripFeedback) {
+    enabledSections.push({
+      entityType: 'trip',
+      title: sectionTitles.trip,
+      rating: 0,
+      tags: [],
+      comment: '',
+    });
+  }
+  if (featureFlags.appFeedback) {
+    enabledSections.push({
+      entityType: 'app',
+      title: sectionTitles.app,
+      rating: 0,
+      tags: [],
+      comment: '',
+    });
+  }
+  if (featureFlags.marshalFeedback) {
+    enabledSections.push({
+      entityType: 'marshal',
+      title: sectionTitles.marshal,
+      rating: 0,
+      tags: [],
+      comment: '',
+    });
+  }
+  
+  return enabledSections;
+};
+
 export default function FeedbackForm() {
   const { state, updateFeatureFlags, addFeedback } = useApp();
   const { featureFlags } = state;
 
-  const [sections, setSections] = useState<FormSection[]>(() => {
-    const enabledSections: FormSection[] = [];
-    
-    if (featureFlags.driverFeedback) {
-      enabledSections.push({
-        entityType: 'driver',
-        title: sectionTitles.driver,
-        rating: 0,
-        tags: [],
-        comment: '',
-      });
-    }
-    if (featureFlags.tripFeedback) {
-      enabledSections.push({
-        entityType: 'trip',
-        title: sectionTitles.trip,
-        rating: 0,
-        tags: [],
-        comment: '',
-      });
-    }
-    if (featureFlags.appFeedback) {
-      enabledSections.push({
-        entityType: 'app',
-        title: sectionTitles.app,
-        rating: 0,
-        tags: [],
-        comment: '',
-      });
-    }
-    if (featureFlags.marshalFeedback) {
-      enabledSections.push({
-        entityType: 'marshal',
-        title: sectionTitles.marshal,
-        rating: 0,
-        tags: [],
-        comment: '',
-      });
-    }
-    
-    return enabledSections;
-  });
+  const [sections, setSections] = useState<FormSection[]>(() => 
+    getSectionsFromFeatureFlags(featureFlags)
+  );
+
+  // Update sections when feature flags change
+  useEffect(() => {
+    setSections(getSectionsFromFeatureFlags(featureFlags));
+    // Reset current step when sections change
+    setCurrentStep(0);
+  }, [featureFlags.driverFeedback, featureFlags.tripFeedback, featureFlags.appFeedback, featureFlags.marshalFeedback]);
 
   const [errors, setErrors] = useState<Record<number, string>>({});
   const [touched, setTouched] = useState<Record<number, boolean>>({});

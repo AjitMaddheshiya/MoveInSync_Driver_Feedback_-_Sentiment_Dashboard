@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import MetricCard from '../components/dashboard/MetricCard';
 import SentimentDonut from '../components/dashboard/SentimentDonut';
+import FeedbackByCategory from '../components/dashboard/FeedbackByCategory';
 import DriverLeaderboard from '../components/dashboard/DriverLeaderboard';
 import FeedbackTimeline from '../components/dashboard/FeedbackTimeline';
 import DriverDetailModal from '../components/dashboard/DriverDetailModal';
@@ -55,6 +56,17 @@ export default function DashboardPage() {
               positive={metrics.positiveCount}
               neutral={metrics.neutralCount}
               negative={metrics.negativeCount}
+            />
+          </div>
+          <div className="card">
+            <div className="card-header">
+              <h3 className="card-title">Feedback by Category</h3>
+            </div>
+            <FeedbackByCategory
+              driverCount={metrics.driverCount}
+              tripCount={metrics.tripCount}
+              appCount={metrics.appCount}
+              marshalCount={metrics.marshalCount}
             />
           </div>
         </div>

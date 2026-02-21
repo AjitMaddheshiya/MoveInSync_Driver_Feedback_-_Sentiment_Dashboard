@@ -61,6 +61,11 @@ export interface DashboardMetrics {
   negativeCount: number;
   averageScore: number;
   driversBelowThreshold: number;
+  // Category breakdown
+  driverCount: number;
+  tripCount: number;
+  appCount: number;
+  marshalCount: number;
 }
 
 export interface Alert {
