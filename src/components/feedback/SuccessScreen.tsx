@@ -1,9 +1,21 @@
-import { CheckCircle } from 'lucide-react';
+import React from 'react';
+import { CheckCircle, LogOut, PlusCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useApp } from '../../context/AppContext';
 import './SuccessScreen.css';
 
-export default function SuccessScreen() {
+export default function SuccessScreen(): React.ReactElement {
   const navigate = useNavigate();
+  const { logout } = useApp();
+
+  const handleLogout = (): void => {
+    logout();
+    navigate('/login');
+  };
+
+  const handleSubmitAnother = (): void => {
+    window.location.replace('/feedback');
+  };
 
   return (
     <div className="success-screen">
@@ -16,16 +28,18 @@ export default function SuccessScreen() {
       </p>
       <div className="success-actions">
         <button 
-          className="btn btn-primary btn-lg"
-          onClick={() => navigate('/dashboard')}
+          className="btn btn-secondary btn-lg"
+          onClick={handleSubmitAnother}
         >
-          View Dashboard
+          <PlusCircle size={18} />
+          Submit Another Feedback
         </button>
         <button 
-          className="btn btn-secondary btn-lg"
-          onClick={() => navigate('/feedback')}
+          className="btn btn-outline btn-lg"
+          onClick={handleLogout}
         >
-          Submit Another Feedback
+          <LogOut size={18} />
+          Logout
         </button>
       </div>
     </div>

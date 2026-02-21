@@ -1,7 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { FeatureFlags, FeedbackSection as FeedbackSectionType, FeedbackEntry } from '../../types';
 import { feedbackTags } from '../../data/mockData';
+import { ThumbsUp, Meh, ThumbsDown, Frown } from 'lucide-react';
 import FeedbackSection from './FeedbackSection';
 import ProgressIndicator from './ProgressIndicator';
 import SuccessScreen from './SuccessScreen';
@@ -67,9 +69,11 @@ const getSectionsFromFeatureFlags = (featureFlags: FeatureFlags): FormSection[] 
 };
 
 export default function FeedbackForm() {
-  const { state, updateFeatureFlags, addFeedback } = useApp();
-  const { featureFlags } = state;
+  const navigate = useNavigate();
+  const { state, updateFeatureFlags, addFeedback, isUser } = useApp();
+  const { featureFlags, user } = state;
 
+  const [quickRating, setQuickRating] = useState<number | null>(null);
   const [sections, setSections] = useState<FormSection[]>(() => 
     getSectionsFromFeatureFlags(featureFlags)
   );
@@ -163,8 +167,8 @@ export default function FeedbackForm() {
         timestamp: new Date().toISOString(),
         text: section.comment,
         tags: section.tags,
-        driverId: 'GUEST',
-        driverName: 'Guest User',
+        driverId: user?.id || 'GUEST',
+        driverName: user?.name || 'Guest User',
       };
 
       addFeedback(feedbackEntry);
@@ -172,6 +176,13 @@ export default function FeedbackForm() {
 
     setIsSubmitting(false);
     setIsSubmitted(true);
+
+    // If logged in user, redirect to their dashboard after showing success
+    if (user && !isUser()) {
+      setTimeout(() => {
+        navigate('/my-rides');
+      }, 2000);
+    }
   };
 
   const handleNext = () => {
@@ -252,6 +263,45 @@ export default function FeedbackForm() {
 
   return (
     <div className="feedback-form">
+      {/* Quick Rating Options at Top */}
+      <div className="quick-rating-options">
+        <span className="quick-rating-label">How was your experience?</span>
+        <div className="quick-rating-buttons">
+          <button 
+            className={`quick-rating-btn ${quickRating === 5 ? 'active' : ''}`}
+            onClick={() => setQuickRating(5)}
+            title="Very Satisfied"
+          >
+            <ThumbsUp size={24} />
+            <span>Very Satisfied</span>
+          </button>
+          <button 
+            className={`quick-rating-btn ${quickRating === 4 ? 'active' : ''}`}
+            onClick={() => setQuickRating(4)}
+            title="Satisfied"
+          >
+            <Meh size={24} />
+            <span>Satisfied</span>
+          </button>
+          <button 
+            className={`quick-rating-btn ${quickRating === 3 ? 'active' : ''}`}
+            onClick={() => setQuickRating(3)}
+            title="Neutral"
+          >
+            <Frown size={24} />
+            <span>Neutral</span>
+          </button>
+          <button 
+            className={`quick-rating-btn ${quickRating === 2 ? 'active' : ''}`}
+            onClick={() => setQuickRating(2)}
+            title="Dissatisfied"
+          >
+            <ThumbsDown size={24} />
+            <span>Dissatisfied</span>
+          </button>
+        </div>
+      </div>
+
       {isMultiStep && (
         <ProgressIndicator 
           currentStep={currentStep} 

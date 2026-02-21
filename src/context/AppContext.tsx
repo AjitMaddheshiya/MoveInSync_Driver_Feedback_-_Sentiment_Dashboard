@@ -7,7 +7,9 @@ import {
   DateRange,
   SortConfig,
   FilterConfig,
-  DashboardMetrics
+  DashboardMetrics,
+  User,
+  UserRole
 } from '../types';
 import { 
   defaultFeatureFlags, 
@@ -22,6 +24,7 @@ const STORAGE_KEYS = {
   FEEDBACK_ENTRIES: 'driverFeedback_feedbackEntries',
   DRIVERS: 'driverFeedback_drivers',
   ALERTS: 'driverFeedback_alerts',
+  USER: 'driverFeedback_user',
 };
 
 // Load from localStorage
@@ -124,6 +127,7 @@ interface AppState {
   filterConfig: FilterConfig;
   selectedDriver: Driver | null;
   isLoading: boolean;
+  user: User | null;
 }
 
 // Action Types
@@ -136,13 +140,16 @@ type AppAction =
   | { type: 'ADD_FEEDBACK'; payload: FeedbackEntry }
   | { type: 'MARK_ALERT_READ'; payload: string }
   | { type: 'CLEAR_ALL_ALERTS' }
-  | { type: 'SET_LOADING'; payload: boolean };
+  | { type: 'SET_LOADING'; payload: boolean }
+  | { type: 'LOGIN'; payload: User }
+  | { type: 'LOGOUT' };
 
 // Initial State - Load from localStorage or use defaults
 const getInitialState = (): AppState => {
   const storedFeedback = loadFromStorage<FeedbackEntry[]>(STORAGE_KEYS.FEEDBACK_ENTRIES, []);
   const storedDrivers = loadFromStorage<Driver[]>(STORAGE_KEYS.DRIVERS, []);
   const storedAlerts = loadFromStorage<Alert[]>(STORAGE_KEYS.ALERTS, []);
+  const storedUser = loadFromStorage<User | null>(STORAGE_KEYS.USER, null);
   
   // If no stored data, use mock data
   const feedbackEntries = storedFeedback.length > 0 ? storedFeedback : mockFeedbackEntries;
@@ -165,6 +172,7 @@ const getInitialState = (): AppState => {
     },
     selectedDriver: null,
     isLoading: false,
+    user: storedUser,
   };
 };
 
@@ -234,6 +242,12 @@ function appReducer(state: AppState, action: AppAction): AppState {
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload };
     
+    case 'LOGIN':
+      return { ...state, user: action.payload };
+    
+    case 'LOGOUT':
+      return { ...state, user: null };
+    
     default:
       return state;
   }
@@ -257,6 +271,12 @@ interface AppContextType {
   getFilteredFeedback: () => FeedbackEntry[];
   getDriverById: (id: string) => Driver | undefined;
   getDriverFeedbackHistory: (driverId: string) => FeedbackEntry[];
+  // Auth functions
+  login: (user: User) => void;
+  logout: () => void;
+  isAuthenticated: () => boolean;
+  isAdmin: () => boolean;
+  isUser: () => boolean;
 }
 
 // Create Context
@@ -278,6 +298,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     saveToStorage(STORAGE_KEYS.ALERTS, state.alerts);
   }, [state.alerts]);
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.USER, state.user);
+  }, [state.user]);
 
   // Helper functions
   const updateFeatureFlags = (flags: Partial<FeatureFlags>) => {
@@ -385,6 +409,27 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return state.feedbackEntries.filter(f => f.driverId === driverId);
   };
 
+  // Auth functions
+  const login = (user: User) => {
+    dispatch({ type: 'LOGIN', payload: user });
+  };
+
+  const logout = () => {
+    dispatch({ type: 'LOGOUT' });
+  };
+
+  const isAuthenticated = () => {
+    return state.user !== null;
+  };
+
+  const isAdmin = () => {
+    return state.user?.role === 'admin';
+  };
+
+  const isUser = () => {
+    return state.user?.role === 'user';
+  };
+
   const value: AppContextType = {
     state,
     dispatch,
@@ -401,6 +446,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     getFilteredFeedback,
     getDriverById,
     getDriverFeedbackHistory,
+    login,
+    logout,
+    isAuthenticated,
+    isAdmin,
+    isUser,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

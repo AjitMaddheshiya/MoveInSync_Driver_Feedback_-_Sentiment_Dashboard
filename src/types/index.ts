@@ -1,3 +1,15 @@
+// User Types
+export type UserRole = 'admin' | 'user';
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  avatar?: string;
+  createdAt: string;
+}
+
 // Feature Flag Configuration
 export interface FeatureFlags {
   driverFeedback: boolean;
