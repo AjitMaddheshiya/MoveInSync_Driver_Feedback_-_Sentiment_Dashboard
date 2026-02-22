@@ -139,8 +139,10 @@ export default function LoginPage() {
         <div className="login-demo-info">
           <p>Demo Credentials:</p>
           <div className="demo-credentials">
-            <span><strong>Admin:</strong> admin@driver.com / admin123</span>
-            <span><strong>User:</strong> user@driver.com / user123</span>
+            <span><strong>Admin:</strong> admin@driver.com</span>
+            <span><strong>Pass:</strong> admin123</span>
+            <span><strong>User:</strong> user@driver.com</span>
+            <span><strong>Pass:</strong> user123</span>
           </div>
         </div>
 
