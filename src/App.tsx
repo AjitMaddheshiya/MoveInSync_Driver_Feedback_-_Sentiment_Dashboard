@@ -5,6 +5,7 @@ import FeedbackPage from './pages/FeedbackPage'
 import DashboardPage from './pages/DashboardPage'
 import DriversPage from './pages/DriversPage'
 import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 import ProfilePage from './pages/ProfilePage'
 import UserDashboardPage from './pages/UserDashboardPage'
 import './App.css'
@@ -43,6 +44,10 @@ function AppContent() {
       {/* Public routes */}
       <Route path="/login" element={
         isAuthenticated() ? <Navigate to={getDefaultRoute()} replace /> : <LoginPage />
+      } />
+      
+      <Route path="/register" element={
+        isAuthenticated() ? <Navigate to={getDefaultRoute()} replace /> : <RegisterPage />
       } />
       
       {/* Feedback form - accessible to all, but users must complete it first */}

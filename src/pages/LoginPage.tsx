@@ -148,6 +148,8 @@ export default function LoginPage() {
 
         <div className="login-footer-links">
           <a href="/feedback">Submit Feedback as Guest</a>
+          <span className="footer-divider">|</span>
+          <a href="/register">New User Register</a>
         </div>
       </div>
     </div>
