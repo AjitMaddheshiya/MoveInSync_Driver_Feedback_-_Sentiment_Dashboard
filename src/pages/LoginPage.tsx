@@ -137,12 +137,18 @@ export default function LoginPage() {
         </form>
 
         <div className="login-demo-info">
-          <p>Demo Credentials:</p>
+          <p>Demo Credentials</p>
           <div className="demo-credentials">
-            <span><strong>Admin:</strong> admin@driver.com</span>
-            <span><strong>Pass:</strong> admin123</span>
-            <span><strong>User:</strong> user@driver.com</span>
-            <span><strong>Pass:</strong> user123</span>
+            <div className="demo-account">
+              <span className="account-title">Admin Account</span>
+              <span>Email: admin@driver.com</span>
+              <span>Password: admin123</span>
+            </div>
+            <div className="demo-account">
+              <span className="account-title">User Account</span>
+              <span>Email: user@driver.com</span>
+              <span>Password: user123</span>
+            </div>
           </div>
         </div>
 

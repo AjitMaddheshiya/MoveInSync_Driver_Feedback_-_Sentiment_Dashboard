@@ -243,13 +243,25 @@
 .demo-credentials {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 12px;
   font-size: 12px;
   color: #94A3B8;
 }
 
-.demo-credentials strong {
+.demo-account {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  background: white;
+  border-radius: 8px;
+}
+
+.account-title {
+  font-weight: 600;
   color: #374151;
+  font-size: 13px;
+  margin-bottom: 4px;
 }
 
 .login-footer-links {
