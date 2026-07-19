@@ -7,6 +7,7 @@ View Live : https://moveinsync-driver-feedback-sentim.vercel.app/login
 ## Features
 
 ### Feedback Form (`/feedback`)
+
 - **Multi-Entity Feedback**: Configurable feedback sections for Driver, Trip, App, and Marshal
 - **Feature Flags**: Toggle feedback sections without code changes
 - **Star Rating**: 1-5 star rating with hover states and keyboard accessibility
@@ -17,7 +18,8 @@ View Live : https://moveinsync-driver-feedback-sentim.vercel.app/login
 - **Submission Handling**: Loading states, duplicate prevention, success confirmation
 
 ### Admin Dashboard (`/dashboard`)
-- **Overview Panel**: 
+
+- **Overview Panel**:
   - Total feedback count (Today/7 Days/30 Days toggle)
   - Sentiment distribution donut chart
   - Average sentiment score
@@ -53,13 +55,13 @@ View Live : https://moveinsync-driver-feedback-sentim.vercel.app/login
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 
 ### Installation
 
-```
-bash
+```bash
 # Install dependencies
 npm install
 
@@ -71,8 +73,7 @@ The app will be available at `http://localhost:5173`
 
 ### Build for Production
 
-```
-bash
+```bash
 npm run build
 ```
 
@@ -102,7 +103,8 @@ src/
 ├── context/
 │   └── AppContext.tsx     # Global state management
 ├── data/
-│   └── mockData.ts        # Mock data and helpers
+│   ├── mockData.ts        # Mock data and helpers
+│   └── externalFeedback.ts # Xquik/social feedback row adapter
 ├── pages/
 │   ├── DashboardPage.tsx
 │   └── FeedbackPage.tsx
@@ -121,9 +123,20 @@ src/
 - Color contrast meets WCAG 2.1 AA standards
 - Screen reader compatible
 
+## External Feedback Imports
+
+`src/data/externalFeedback.ts` converts external feedback rows into dashboard
+entries. It accepts review text from `text`, `tweet_text`, `feedback_text`, or
+`comment`, so Xquik social feedback exports can seed the same sentiment metrics
+used by driver and trip feedback. Rows without feedback text or an available
+driver are ignored.
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
 ## Component Architecture
 
 The application follows atomic design principles:
+
 - **Atoms**: StarRating, TagChip, Badge
 - **Molecules**: FeedbackSection, MetricCard
 - **Organisms**: FeedbackForm, DriverLeaderboard
@@ -131,6 +144,7 @@ The application follows atomic design principles:
 - **Pages**: FeedbackPage, DashboardPage
 
 State is managed at appropriate levels:
+
 - **Local State**: Form inputs, UI toggles, modal visibility
 - **Global State**: Feature flags, driver data, alerts, filters
 
