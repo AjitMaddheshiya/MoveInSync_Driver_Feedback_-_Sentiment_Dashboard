@@ -1,4 +1,8 @@
 import { Driver, FeedbackEntry, FeatureFlags, Alert } from '../types';
+import {
+  demoXquikFeedbackRows,
+  externalFeedbackRowsToEntries,
+} from './externalFeedback';
 
 // Feature Flags Configuration
 export const defaultFeatureFlags: FeatureFlags = {
@@ -110,7 +114,7 @@ const generateFeedbackEntries = (count: number): FeedbackEntry[] => {
     const timestamp = new Date(now.getTime() - (daysAgo * 24 + hoursAgo) * 60 * 60 * 1000);
     
     // Select random tags
-    const availableTags = feedbackTags[entityType] || [];
+    const availableTags = [...(feedbackTags[entityType] || [])];
     const numTags = Math.floor(Math.random() * 3);
     const selectedTags = availableTags
       .sort(() => Math.random() - 0.5)
@@ -133,7 +137,12 @@ const generateFeedbackEntries = (count: number): FeedbackEntry[] => {
   return entries.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 };
 
-export const mockFeedbackEntries = generateFeedbackEntries(150);
+export const mockFeedbackEntries = [
+  ...externalFeedbackRowsToEntries(demoXquikFeedbackRows, mockDrivers),
+  ...generateFeedbackEntries(150),
+].sort(
+  (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+);
 
 // Populate recent feedback for each driver
 mockDrivers.forEach(driver => {
